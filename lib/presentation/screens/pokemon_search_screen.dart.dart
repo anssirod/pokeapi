@@ -19,7 +19,7 @@ class _PokemonSearchState extends State<PokemonSearch> {
     super.initState();
   }
 
-  void _getAllPokemonNames() async {
+  void _getAllPokemonNames() {
     BlocProvider.of<PokemonsBloc>(context).add(PokemonSearchEvent());
   }
 
