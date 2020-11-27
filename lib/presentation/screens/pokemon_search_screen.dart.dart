@@ -1,7 +1,7 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pokeapi/blocks/bloc/pokemons_bloc.dart';
+import 'package:pokeapi/blocks/pokemon_bloc/pokemons_bloc.dart';
 import 'package:pokeapi/data/models/pokemon_model.dart';
 
 class PokemonSearch extends StatefulWidget {
