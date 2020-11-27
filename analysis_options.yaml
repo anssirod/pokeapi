@@ -1,0 +1,21 @@
+include: package:pedantic/analysis_options.yaml
+
+linter:
+  rules:
+    parameter_assignments: true #Don't reassign references to parameters of functions or methods.
+    prefer_const_constructors: true
+    sized_box_for_whitespace: true
+    avoid_unnecessary_containers: true
+    avoid_print: true
+    file_names: true #Name source files using lowercase_with_underscores.
+    prefer_final_locals: true
+
+analyzer:
+  errors:
+    missing_required_param: error
+    parameter_assignments: error #Don't reassign references to parameters of functions or methods.
+    missing_return: error
+    prefer_const_constructors: error
+    avoid_unnecessary_containers: error
+    file_names: error
+    prefer_final_locals: error
