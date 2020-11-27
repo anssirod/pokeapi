@@ -6,7 +6,7 @@ import 'package:pokeapi/data/models/pokemon_model.dart';
 
 class Pokeapi {
   Future<List> getAllPokemonNames() async {
-    final _url = 'https://pokeapi.co/api/v2/pokemon/?limit=1117';
+    final _url = 'https://pokeapi.co/api/v2/pokemon/?limit=898';
 
     final _response = await http.get(Uri.encodeFull(_url));
 
@@ -22,7 +22,7 @@ class Pokeapi {
   Future<Pokemon> getRandomPokemon() async {
     final pokemon = Pokemon();
     final _random = Random();
-    final number = _random.nextInt(1117);
+    final number = _random.nextInt(898);
 
     final _url = 'https://pokeapi.co/api/v2/pokemon/$number';
 

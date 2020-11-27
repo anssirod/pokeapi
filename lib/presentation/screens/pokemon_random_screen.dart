@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pokeapi/data/models/pokemon_model.dart';
-import 'package:pokeapi/data/pokeapi.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pokeapi/blocks/bloc/pokemons_bloc.dart';
 
 class PokemonRandom extends StatefulWidget {
   @override
@@ -8,10 +8,7 @@ class PokemonRandom extends StatefulWidget {
 }
 
 class _PokemonRandomState extends State<PokemonRandom> {
-  bool loading = true;
-  Pokemon pokemonInfo;
   final textStyle = const TextStyle(fontSize: 20.0);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,18 +33,18 @@ class _PokemonRandomState extends State<PokemonRandom> {
                 height: 140.0,
                 width: 300.0,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    loading
-                        ? Column(
-                            children: [
-                              const Text('Нажмите на кнопку'),
-                              const SizedBox(height: 20.0),
-                              const CircularProgressIndicator(
-                                backgroundColor: Colors.white,
-                              ),
-                            ],
-                          )
-                        : Column(
+                    BlocConsumer<PokemonsBloc, PokemonsState>(
+                      builder: (context, state) {
+                        if (state is PokemonsLoading) {
+                          return const Center(
+                              child: CircularProgressIndicator(
+                            backgroundColor: Colors.black,
+                          ));
+                        }
+                        if (state is PokemonsLoadedInfo) {
+                          return Column(
                             children: [
                               Text(
                                 'Name: ${pokemonInfo.name}',
@@ -70,20 +67,47 @@ class _PokemonRandomState extends State<PokemonRandom> {
                                 style: textStyle,
                               )
                             ],
-                          ),
+                          );
+                        } else {
+                          return Column(
+                            children: [
+                              const Text(
+                                  'Нажмите на кнопку, чтобы получить \n информацию о случайном покемоне'),
+                              const SizedBox(height: 20.0),
+                            ],
+                          );
+                        }
+                      },
+                      listener: (context, state) {
+                        if (state is PokemonsError) {
+                          Scaffold.of(context).showSnackBar(
+                            SnackBar(
+                              duration: const Duration(seconds: 1),
+                              backgroundColor: Colors.blue,
+                              content: Text(
+                                'Error: ${PokemonsError().error.toString()}',
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ],
                 ),
               ),
             ],
           ),
-          RaisedButton(
-            child: const Text('Получить информацию \n о случайном покемоне'),
-            onPressed: () async {
-              pokemonInfo = await Pokeapi().getRandomPokemon();
-              setState(() {
-                loading = false;
-              });
-            },
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: RaisedButton(
+                color: Colors.blue,
+                child:
+                    const Text('Получить информацию \n о случайном покемоне'),
+                onPressed: () => BlocProvider.of<PokemonsBloc>(context)
+                    .add(PokemonRandomEvent())),
           ),
         ],
       ),

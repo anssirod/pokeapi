@@ -12,12 +12,14 @@ class MenuScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             RaisedButton(
+              color: Colors.blue,
               child: const Text('Поиск покемонов'),
               onPressed: () {
                 Navigator.pushNamed(context, '/search');
               },
             ),
             RaisedButton(
+              color: Colors.blue,
               child: const Text('Случайный покемон'),
               onPressed: () {
                 Navigator.pushNamed(context, '/random');
