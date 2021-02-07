@@ -1,3 +1,3 @@
 # pokeapi
 
-Тестовое задание
+App to work with pokeapi
